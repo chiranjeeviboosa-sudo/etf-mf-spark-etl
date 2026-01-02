@@ -1,9 +1,30 @@
+from pyspark.sql import SparkSession
 
-print("VS Code local Python setup successful")
+# 1️⃣ Create Spark Session (THIS WAS MISSING EARLIER)
+spark = (
+    SparkSession.builder
+    .appName("Local PySpark Demo")
+    .master("local[*]")
+    .getOrCreate()
+)
 
+# 2️⃣ Sample data
+data = [
+    (1, "Chiru", "Data Engineer", 80000),
+    (2, "Sai", "Analyst", 60000),
+    (3, "Ravi", "Developer", 70000)
+]
 
-print("VS Code local Python setup successful")
+columns = ["id", "name", "role", "salary"]
 
-a = 10
-b = 3
-print(a / b)
+# 3️⃣ Create DataFrame
+df = spark.createDataFrame(data, columns)
+
+# 4️⃣ Show Data
+df.show()
+
+# 5️⃣ Print Schema
+df.printSchema()
+
+# 6️⃣ Stop Spark
+spark.stop()
